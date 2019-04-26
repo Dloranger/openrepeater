@@ -21,7 +21,7 @@ class SoundDevices {
 	# Main Device Processor
 	###############################################
 
-	public function get_device_list($output = 'array') {		
+	public function get_device_list() {		
 		// Get ALSA Version from System
 		exec("sudo orp_helper audio version", $version);
 		
@@ -84,11 +84,7 @@ class SoundDevices {
 			$this->device_out_count = $this->device_out_count + 2; // this is because left and right are currently hard coded
 		}
 
-		if ($output == 'details') {
-			return $audio_details;
-		} else {
-			return $this->device_list;
-		}
+		return $this->device_list;
 	}
 
 

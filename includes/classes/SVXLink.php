@@ -214,33 +214,9 @@ class SVXLink {
 		$logic_array[$logicName] += $this->build_module_list();
 
 		$logic_array[$logicName] += [
-			'CALLSIGN' => $this->settingsArray['callSign']
-		];
-
-		# Short ID
-		if ($this->settingsArray['ID_Short_Mode'] == 'disabled') {
-			$logic_array[$logicName] += [
-				'#SHORT_IDENT_INTERVAL' => '0'
-			];
-		} else {
-			$logic_array[$logicName] += [
-				'SHORT_IDENT_INTERVAL' => $this->settingsArray['ID_Short_IntervalMin']
-			];			
-		}
-
-		#Long ID
-		if ($this->settingsArray['ID_Long_Mode'] == 'disabled') {
-			$logic_array[$logicName] += [
-				'#LONG_IDENT_INTERVAL' => '0'
-			];
-		} else {
-			$logic_array[$logicName] += [
-				'LONG_IDENT_INTERVAL' => $this->settingsArray['ID_Long_IntervalMin']
-			];			
-		}
-
-
-		$logic_array[$logicName] += [
+			'CALLSIGN' => $this->settingsArray['callSign'],
+			'SHORT_IDENT_INTERVAL' => $this->settingsArray['ID_Short_IntervalMin'],
+			'LONG_IDENT_INTERVAL' => $this->settingsArray['ID_Long_IntervalMin'],
 			'EVENT_HANDLER' => '/usr/share/svxlink/events.tcl',
 			'DEFAULT_LANG' => 'en_US',
 			'RGR_SOUND_DELAY' => '1',
@@ -285,32 +261,9 @@ class SVXLink {
 		}
 
 		$logic_array[$logicName] += [
-			'CALLSIGN' => $this->settingsArray['callSign']
-		];
-
-		# Short ID
-		if ($this->settingsArray['ID_Short_Mode'] == 'disabled') {
-			$logic_array[$logicName] += [
-				'#SHORT_IDENT_INTERVAL' => '0'
-			];
-		} else {
-			$logic_array[$logicName] += [
-				'SHORT_IDENT_INTERVAL' => $this->settingsArray['ID_Short_IntervalMin']
-			];			
-		}
-
-		#Long ID
-		if ($this->settingsArray['ID_Long_Mode'] == 'disabled') {
-			$logic_array[$logicName] += [
-				'#LONG_IDENT_INTERVAL' => '0'
-			];
-		} else {
-			$logic_array[$logicName] += [
-				'LONG_IDENT_INTERVAL' => $this->settingsArray['ID_Long_IntervalMin']
-			];			
-		}
-
-		$logic_array[$logicName] += [
+			'CALLSIGN' => $this->settingsArray['callSign'],
+			'SHORT_IDENT_INTERVAL' => $this->settingsArray['ID_Short_IntervalMin'],
+			'LONG_IDENT_INTERVAL' => $this->settingsArray['ID_Long_IntervalMin'],
 			'EVENT_HANDLER' => '/usr/share/svxlink/events.tcl',
 			'DEFAULT_LANG' => 'en_US',
 			'RGR_SOUND_DELAY' => '1',
