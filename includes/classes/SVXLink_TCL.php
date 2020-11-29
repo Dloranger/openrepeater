@@ -58,13 +58,74 @@ class SVXLink_TCL {
 
 		$proc_content = $this->proc_short_id();
 		$proc_content .= $this->proc_long_id();
-
+		$proc_content .= $this->proc_DTMF_handler();
 		$proc_footer = "\n\t}\n";
 
 		return $this->indent($proc_header, 0) . $this->indent($proc_content, 1) . $this->indent($proc_footer, 0);
 	}
 
+	
+	###############################################
+	# Proc DTMF Handler
+	###############################################
 
+	private function proc_DTMF_handler() {
+		$proc_header = '
+			#
+			# Executed when a DTMF command has been received
+			#   cmd - The command
+			#
+			# Return 1 to hide the command from further processing is SvxLink or
+			# return 0 to make SvxLink continue processing as normal.
+			#
+			# This function can be used to implement your own custom commands or to disable
+			# DTMF commands that you do not want users to execute.
+			proc dtmf_cmd_received {cmd} {
+			';
+			
+			$proc_content = '
+			variable AnnouncementCommand
+			variable AnnouncementID
+			if {[info exists AnnouncementCommand] } {
+			
+				set AnnouncementID [string range $cmd [expr [string length $AnnouncementCommand]+1] end]
+				puts "Announcement ID :$AnnouncementID: requested"
+	
+				# read in the list
+				set fp [open "/usr/share/svxlink/announcements.txt" "r"]
+				set file_data [read $fp]
+				close $fp
+			
+				#puts $file_data
+			
+				#process the list to look for a match
+				set data [split $file_data "\n"]
+				foreach line $data {
+					if {[string range $line 0 1] eq $AnnouncementID} {
+						#matched the last 2 digits of the cmd entered, get the file path
+						set AnnouncementPath [string range $line 3 end ]
+						if {[file exists "$AnnouncementPath" ]} {
+							playFile $AnnouncementPath
+						} else {
+							puts "ERROR - Requested Announcement File $AnnouncementPath Not Found"
+						}
+					}
+				}
+				return 1
+			} #Annoucement Command
+		
+			return 0
+			}
+		
+			if [info exists CFG_AnnouncementCommand] {
+				set AnnouncementCommand $CFG_AnnouncementCommand
+			}
+		';
+		$proc_footter = "";
+		//$proc_footer = "\n\t}\n";
+
+		return $this->indent($proc_header, 1) . $this->indent($proc_content, 2) . $this->indent($proc_footer, 1);
+	}
 
 	###############################################
 	# Proc Short ID

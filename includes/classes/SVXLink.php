@@ -314,6 +314,8 @@ class SVXLink {
 		$logic_array[$logicName]['OPEN_ON_SQL'] = '1';
 		$logic_array[$logicName]['OPEN_SQL_FLANK'] = 'OPEN';
 		$logic_array[$logicName]['IDLE_SOUND_INTERVAL'] = '0';
+		$logic_array[$logicName]['DTMF_CTRL_PTY'] = '/tmp/ORP_PORT'.$curPort;
+		$logic_array[$logicName]['ANNOUNCE_CMD'] = '96'.$curPort;
 
 		# Macro Section
 		$logic_array[$logicName]['MACROS'] = '';
