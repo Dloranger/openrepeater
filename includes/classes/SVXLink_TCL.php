@@ -80,24 +80,25 @@ class SVXLink_TCL {
 			#
 			# This function can be used to implement your own custom commands or to disable
 			# DTMF commands that you do not want users to execute.
-			proc dtmf_cmd_received {cmd} {
+			#
 			';
 			
 			$proc_content = '
-			variable AnnouncementCommand
-			variable AnnouncementID
-			if {[info exists AnnouncementCommand] } {
-			
-				set AnnouncementID [string range $cmd [expr [string length $AnnouncementCommand]+1] end]
+			proc dtmf_cmd_received {cmd} {
+	
+				variable ANNOUNCE_CMD
+				variable AnnouncementID
+	
+				set AnnouncementID [string range $cmd [expr [string length $ANNOUNCE_CMD]+1] end]
 				puts "Announcement ID :$AnnouncementID: requested"
 	
 				# read in the list
 				set fp [open "/usr/share/svxlink/announcements.txt" "r"]
 				set file_data [read $fp]
 				close $fp
-			
+	
 				#puts $file_data
-			
+	
 				#process the list to look for a match
 				set data [split $file_data "\n"]
 				foreach line $data {
@@ -112,14 +113,11 @@ class SVXLink_TCL {
 					}
 				}
 				return 1
-			} #Annoucement Command
-		
-			return 0
 			}
-		
-			if [info exists CFG_AnnouncementCommand] {
-				set AnnouncementCommand $CFG_AnnouncementCommand
-			}
+	
+		if [info exists CFG_ANNOUNCE_CMD] {
+		set ANNOUNCE_CMD $CFG_ANNOUNCE_CMD
+		}
 		';
 		$proc_footter = "";
 		//$proc_footer = "\n\t}\n";
